@@ -1,10 +1,9 @@
 package com.wex.transactions.exchange.rates.domain.transaction;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -14,6 +13,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(of="id")
 public class Transaction {
 
@@ -21,10 +21,12 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Size(max=50, message = "Product description should not exceed 50 characters!")
     private String description;
 
-    private BigDecimal amount;
-
     private LocalDate date;
+
+    @Positive(message = "Purchase amount should be a positive value!")
+    private BigDecimal amount;
 
 }
