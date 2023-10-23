@@ -1,5 +1,6 @@
 package com.wex.transactions.exchange.rates.domain.transaction;
 
+import com.wex.transactions.exchange.rates.dtos.TransactionDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
@@ -28,5 +29,11 @@ public class Transaction {
 
     @Positive(message = "Purchase amount should be a positive value!")
     private BigDecimal amount;
+
+    public Transaction(TransactionDTO transactionDTO) {
+        this.description = transactionDTO.getDescription();
+        this.date = transactionDTO.getDate();
+        this.amount = transactionDTO.getAmount();
+    }
 
 }

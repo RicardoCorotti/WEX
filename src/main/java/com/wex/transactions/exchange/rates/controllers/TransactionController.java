@@ -10,8 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController()
 @RequestMapping("/transactions")
 public class TransactionController {
@@ -31,19 +29,15 @@ public class TransactionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TransactionCurrencyDTO> getTransactionById(@PathVariable Long id) throws Exception {
-        TransactionCurrencyDTO transactionCurrencyDTO = this.service.getTransactionById(id);
+    public ResponseEntity<TransactionCurrencyDTO> getTransactionConvertedToCurrency(
+            @PathVariable Long id, @RequestParam String country) throws Exception {
+
+        TransactionCurrencyDTO transactionCurrencyDTO = this.service.getTransactionConvertedToCurrency(id, country);
         return new ResponseEntity<>(transactionCurrencyDTO, HttpStatus.OK);
     }
 
     private TransactionDTO toTransactionDTO(Transaction transaction) {
         return modelMapper.map(transaction, TransactionDTO.class);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<Transaction>> getAllTransactions() {
-        List<Transaction> transactions = this.service.getAllTransactions();
-        return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
 
 }
